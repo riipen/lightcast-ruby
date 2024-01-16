@@ -1,3 +1,4 @@
+[![Gem Version](https://badge.fury.io/rb/lightcast-ruby.svg)](https://badge.fury.io/rb/lightcast-ruby)
 [![CircleCI](https://dl.circleci.com/status-badge/img/gh/riipen/lightcast-ruby/tree/main.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/riipen/lightcast-ruby/tree/main)
 
 # Lightcast Ruby
