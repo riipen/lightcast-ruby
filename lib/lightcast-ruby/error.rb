@@ -30,9 +30,9 @@ module Lightcast
     private
 
     def build_error_message
-      return nil if @response.nil? || ![400, 409].include?(@response.status) || !@response.body['errors']
+      return nil if @response.nil? || !@response.body['errors']
 
-      "#{@response.body.dig("errors", 0, "code")}: #{@response.body.dig("errors", 0, "message")}"
+      "#{@response.body.dig("errors", 0, "title")}: #{@response.body.dig("errors", 0, "detail")}"
     end
   end
 

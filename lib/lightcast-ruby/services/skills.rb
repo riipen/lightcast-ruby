@@ -8,14 +8,14 @@ module Lightcast
         @version  = version
       end
 
-      def get(id)
-        @client.connection_services.get("/skills/versions/#{@version}/skills/#{id}")
-      end
-
       def extract(body = {}, query = { language: 'en', confidence_threshold: 0 })
         @client.connection_services.post(
           "/skills/versions/#{@version}/extract?language=#{query[:language]}&confidenceThreshold=#{query[:confidence_threshold]}", body
         )
+      end
+
+      def get(id)
+        @client.connection_services.get("/skills/versions/#{@version}/skills/#{id}")
       end
 
       def related(**params)
