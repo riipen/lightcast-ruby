@@ -20,7 +20,7 @@ Then `bundle install`.
 
 ### Quick Start
 
-The Lightcast API uses OAuth to authenticate API requests. All endpoints require an OAuth bearer token. Tokens are granted through the Authentication API and are valid for 1 hour. 
+Create your client
 
 ```ruby
 client = Lightcast::Client.new(
@@ -29,6 +29,64 @@ client = Lightcast::Client.new(
   scope: 'profiles:us',
 )
 ```
+
+and then create an authentication token that lasts 1 hour
+
+```ruby
+client.authenticate
+```
+
+Now you can make use of any of your available APIs for your client.
+
+### Skills API
+
+You can access the skills API via
+
+```ruby
+client.skills(version: 'latest')
+```
+
+where the optional version is any valid version.
+
+#### Skills Extract
+
+Extract skills from plain text.
+
+```ruby
+client.skills.extract({ text: 'blah blah blah' }, { language: 'en', confidence_threshold: 0.5 })
+```
+
+[API docs](https://docs.lightcast.dev/apis/skills#versions-version-extract)
+
+#### Skills Get
+
+Get a single skill.
+
+```ruby
+client.skills.get(123)
+```
+
+[API docs](https://docs.lightcast.dev/apis/skills#versions-version-skills-skill_id)
+
+#### Skills Related
+
+Get related skills from provided skills.
+
+```ruby
+client.related.get(ids: ['12345', 'abcde'])
+```
+
+[API docs](https://docs.lightcast.dev/apis/skills#versions-version-related)
+
+#### Skills Status
+
+Get the status of the skills API.
+
+```ruby
+client.skills.status
+```
+
+[API docs](https://docs.lightcast.dev/apis/skills#status)
 
 ### Errors
 
