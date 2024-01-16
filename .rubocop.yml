@@ -14,7 +14,7 @@ Metrics/BlockLength:
 Naming/FileName:
   Enabled: true
   Exclude:
-    - lib/credly-ruby.rb
+    - lib/lightcast-ruby.rb
 
 RSpec/ExampleLength:
   Enabled: false
