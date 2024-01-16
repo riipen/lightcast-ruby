@@ -1,0 +1,13 @@
+*.gem
+/coverage/
+/spec/reports/
+/tmp/
+
+## Environment normalization:
+/.bundle/
+
+# RSpec related files
+.rspec_status
+
+# .DS_STORE files
+.DS_STORE
