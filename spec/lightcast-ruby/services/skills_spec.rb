@@ -47,6 +47,21 @@ RSpec.describe Lightcast::Services::Skills do
     end
   end
 
+  describe '#list' do
+    it 'issues the correct GET request' do
+      params = {
+        q: 'foo'
+      }
+
+      stub = stub_request(:get, "#{Lightcast::Client::BASE_URL_SERVICES}/skills/versions/latest/skills")
+             .with(query: { q: params[:q] })
+
+      @skills.list(**params)
+
+      expect(stub).to have_been_requested
+    end
+  end
+
   describe '#related' do
     it 'issues the correct POST request' do
       params = {

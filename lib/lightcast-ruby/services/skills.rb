@@ -18,6 +18,10 @@ module Lightcast
         @client.connection_services.get("/skills/versions/#{@version}/skills/#{id}")
       end
 
+      def list(**params)
+        @client.connection_services.get("/skills/versions/#{@version}/skills", **params)
+      end
+
       def related(**params)
         @client.connection_services.post("/skills/versions/#{@version}/related", **params)
       end
