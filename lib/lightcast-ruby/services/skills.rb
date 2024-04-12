@@ -3,31 +3,40 @@
 module Lightcast
   module Services
     class Skills
-      def initialize(client:, version:)
+      def initialize(client:, version:, release:)
         @client   = client
         @version  = version
+        @release = release
       end
 
-      def extract(body = {}, query = { language: 'en', confidence_threshold: 0 })
+      def extract(**params)
+        # text: ''
+        # inputLocale: 'en-US'
+        # outputLocale: 'en-US'
+        # confidenceThreshold: 0.5
         @client.connection_services.post(
-          "/skills/versions/#{@version}/extract?language=#{query[:language]}&confidenceThreshold=#{query[:confidence_threshold]}", body
+          "/classifications/#{@release}/skills/extract", **params
         )
       end
 
       def get(id)
-        @client.connection_services.get("/skills/versions/#{@version}/skills/#{id}")
+        @client.connection_services.get("/taxonomies/skills/versions/#{@version}/concepts/#{id}")
       end
 
       def list(**params)
-        @client.connection_services.get("/skills/versions/#{@version}/skills", **params)
+        # fields: ["name"]
+        # filter: {level: '2', id:[]}
+        @client.connection_services.post("/taxonomies/skills/versions/#{@version}/concepts", **params)
       end
 
       def related(**params)
-        @client.connection_services.post("/skills/versions/#{@version}/related", **params)
+        # ids: ['']
+        # relationType: 'sibling'
+        @client.connection_services.post("/taxonomies/skills/versions/#{@version}/relations", **params)
       end
 
       def status
-        @client.connection_services.get('/skills/status')
+        @client.connection_services.get('/status')
       end
     end
   end

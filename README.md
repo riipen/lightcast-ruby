@@ -5,9 +5,9 @@
 
 An API client for the Lightcast REST APIs in ruby.
 
-Lightcast APIs documentation can be found here:
+Lightcast Classification APIs documentation can be found here:
 
-https://docs.lightcast.dev/apis
+https://docs.lightcast.dev/apis/classification
 
 ## Installation
 
@@ -29,7 +29,7 @@ Create your client
 client = Lightcast::Client.new(
   client_id: '123ABC'
   client_secret: '456DEF'
-  scope: 'profiles:us',
+  scope: 'classifications_api',
 )
 ```
 
@@ -46,7 +46,7 @@ Now you can make use of any of your available APIs for your client.
 You can access the skills API via
 
 ```ruby
-client.skills(version: 'latest')
+client.skills(version: '9.0.0', release: '2024.7')
 ```
 
 where the optional version is any valid version.
@@ -56,10 +56,10 @@ where the optional version is any valid version.
 Extract skills from plain text.
 
 ```ruby
-client.skills.extract({ text: 'blah blah blah' }, { language: 'en', confidence_threshold: 0.5 })
+skills.extract(text:'computer science is a cool thing to study')
 ```
 
-[API docs](https://docs.lightcast.dev/apis/skills#versions-version-extract)
+[API docs](https://docs.lightcast.dev/apis/classification#post-extract-skills)
 
 #### Skills Get
 
@@ -69,27 +69,46 @@ Get a single skill.
 client.skills.get(123)
 ```
 
-[API docs](https://docs.lightcast.dev/apis/skills#versions-version-skills-skill_id)
+[API docs](https://docs.lightcast.dev/apis/classification#get-get-a-concept-by-id)
+
+#### Skills List
+
+List skills.
+
+```ruby
+client.skills.post(
+   fields: ['name'],
+   filter: {
+     level: ['2'],
+     id: [
+      "someId",
+      "anotherId"
+     ]
+   },
+   limit: 5)
+```
+
+[API docs](https://docs.lightcast.dev/apis/classification#post-list-requested-taxonomy-concepts)
 
 #### Skills Related
 
 Get related skills from provided skills.
 
 ```ruby
-client.related.get(ids: ['12345', 'abcde'])
+client.related.get(ids: ['12345', 'abcde'], relationType: 'sibling')
 ```
 
-[API docs](https://docs.lightcast.dev/apis/skills#versions-version-related)
+[API docs](https://docs.lightcast.dev/apis/classification#post-list-requested-taxonomy-concepts)
 
 #### Skills Status
 
-Get the status of the skills API.
+Get the status of the classifications API.
 
 ```ruby
 client.skills.status
 ```
 
-[API docs](https://docs.lightcast.dev/apis/skills#status)
+[API docs](https://docs.lightcast.dev/apis/classification#get-get-service-status)
 
 ### Errors
 

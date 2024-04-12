@@ -7,7 +7,7 @@ module Lightcast
     include Lightcast::Authentication
 
     BASE_URL_AUTH     = 'https://auth.emsicloud.com'
-    BASE_URL_SERVICES = 'https://emsiservices.com'
+    BASE_URL_SERVICES = 'https://classification.emsicloud.com'
 
     def initialize(client_id:, client_secret:, scope:)
       @client_id      = client_id
@@ -18,15 +18,15 @@ module Lightcast
     end
 
     def connection_auth
-      Connection.new(url: BASE_URL_AUTH)
+      Connection.new(url: BASE_URL_AUTH, scope: @scope)
     end
 
     def connection_services
       Connection.new(access_token: @access_token, url: BASE_URL_SERVICES)
     end
 
-    def skills(version: 'latest')
-      @skills ||= Lightcast::Services::Skills.new(client: self, version: version)
+    def skills(version: '9.0.0', release: '2024.7')
+      @skills ||= Lightcast::Services::Skills.new(client: self, version: version, release: release)
     end
   end
 end

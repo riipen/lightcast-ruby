@@ -6,7 +6,7 @@ RSpec.describe Lightcast::Connection do
   subject { @connection }
 
   before do
-    @connection = described_class.new(url: 'https://foo.com/bar', access_token: 'token')
+    @connection = described_class.new(url: 'https://foo.com/bar', access_token: 'token', scope: 'scope')
   end
 
   # Class Methods

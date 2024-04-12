@@ -7,7 +7,9 @@ RSpec.describe Lightcast::Services::Skills do
 
   before do
     @client = Lightcast::Client.new(client_id: 'id', client_secret: 'secret', scope: 'scope')
-    @skills = described_class.new(client: @client, version: 'latest')
+    @release = '2024.7'
+    @version = '9.0.0'
+    @skills = described_class.new(client: @client, version: @version, release: @release)
   end
 
   describe '.initialize' do
@@ -18,19 +20,19 @@ RSpec.describe Lightcast::Services::Skills do
 
   describe '#extract' do
     it 'issues the correct POST request' do
-      query = {
-        language: 'fr',
-        confidence_threshold: 0.5
-      }
       params = {
-        text: 'blah blah'
+        body: {
+          text: 'blah blah',
+          inputLocale: 'en-US',
+          outputLocale: 'en-US',
+          confidenceThreshold: 0.5
+        }
       }
 
-      stub = stub_request(:post, "#{Lightcast::Client::BASE_URL_SERVICES}/skills/versions/latest/extract")
-             .with(query: { language: query[:language], confidenceThreshold: query[:confidence_threshold] })
-             .with(body: params)
+      stub = stub_request(:post, "#{Lightcast::Client::BASE_URL_SERVICES}/classifications/#{@release}/skills/extract")
+             .with(**params)
 
-      @skills.extract(params, query)
+      @skills.extract(**params[:body])
 
       expect(stub).to have_been_requested
     end
@@ -39,7 +41,7 @@ RSpec.describe Lightcast::Services::Skills do
   describe '#get' do
     it 'issues the correct GET request' do
       id    = '1'
-      stub  = stub_request(:get, "#{Lightcast::Client::BASE_URL_SERVICES}/skills/versions/latest/skills/#{id}")
+      stub  = stub_request(:get, "#{Lightcast::Client::BASE_URL_SERVICES}/taxonomies/skills/versions/#{@version}/concepts/#{id}")
 
       @skills.get(id)
 
@@ -48,15 +50,18 @@ RSpec.describe Lightcast::Services::Skills do
   end
 
   describe '#list' do
-    it 'issues the correct GET request' do
+    it 'issues the correct POST request' do
       params = {
-        q: 'foo'
+        body: {
+          fields: ['name'],
+          filter: { level: '2' }
+        }
       }
 
-      stub = stub_request(:get, "#{Lightcast::Client::BASE_URL_SERVICES}/skills/versions/latest/skills")
-             .with(query: { q: params[:q] })
+      stub = stub_request(:post, "#{Lightcast::Client::BASE_URL_SERVICES}/taxonomies/skills/versions/#{@version}/concepts")
+             .with(**params)
 
-      @skills.list(**params)
+      @skills.list(**params[:body])
 
       expect(stub).to have_been_requested
     end
@@ -65,13 +70,16 @@ RSpec.describe Lightcast::Services::Skills do
   describe '#related' do
     it 'issues the correct POST request' do
       params = {
-        ids: ['4008b9b1-1251-40a3-ba90-1bbc9720fc37']
+        body: {
+          ids: ['4008b9b1-1251-40a3-ba90-1bbc9720fc37'],
+          relationType: 'sibling'
+        }
       }
 
-      stub = stub_request(:post, "#{Lightcast::Client::BASE_URL_SERVICES}/skills/versions/latest/related")
-             .with(body: params)
+      stub = stub_request(:post, "#{Lightcast::Client::BASE_URL_SERVICES}/taxonomies/skills/versions/#{@version}/relations")
+             .with(**params)
 
-      @skills.related(**params)
+      @skills.related(**params[:body])
 
       expect(stub).to have_been_requested
     end
@@ -79,7 +87,7 @@ RSpec.describe Lightcast::Services::Skills do
 
   describe '#status' do
     it 'issues the correct GET request' do
-      stub = stub_request(:get, "#{Lightcast::Client::BASE_URL_SERVICES}/skills/status")
+      stub = stub_request(:get, "#{Lightcast::Client::BASE_URL_SERVICES}/status")
 
       @skills.status
 
