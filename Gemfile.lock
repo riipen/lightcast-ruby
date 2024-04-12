@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    lightcast-ruby (0.1.0)
+    lightcast-ruby (0.2.0)
       faraday (~> 1.0, >= 1.0.0)
 
 GEM
@@ -93,6 +93,7 @@ GEM
       hashdiff (>= 0.4.0, < 2.0.0)
 
 PLATFORMS
+  x86_64-darwin-20
   x86_64-darwin-22
   x86_64-linux
 
