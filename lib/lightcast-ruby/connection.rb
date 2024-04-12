@@ -6,9 +6,10 @@ module Lightcast
   class Connection
     attr_accessor :access_token, :url
 
-    def initialize(url:, access_token: nil)
+    def initialize(url:, access_token: nil, scope: 'classification_api')
       @access_token = access_token
       @url          = url
+      @scope = scope
     end
 
     def delete(path, **params)
