@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     lightcast-ruby (0.2.0)
-      faraday (>= 2.0.0, < 3.0)
+    faraday (>= 2.0.1)
 
 GEM
   remote: https://rubygems.org/
@@ -80,7 +80,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  faraday (>= 2.0.0, < 3.0)
+  faraday (>= 2.0.1)
   lightcast-ruby!
   rake (~> 13.0.6)
   rspec (~> 3.12.0)
