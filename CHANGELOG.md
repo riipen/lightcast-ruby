@@ -1,3 +1,7 @@
+## v0.2.3
+
+Upgraded `uri` to 1.0.3
+
 ## v0.2.2
 
 Upgraded `rexml` to 3.4.1
