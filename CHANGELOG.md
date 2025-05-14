@@ -1,3 +1,7 @@
+## v0.2.2
+
+Upgraded `rexml` to 3.4.1
+
 ## v0.2.1
 
 Upgrade faraday dependency to >=2.0.1
