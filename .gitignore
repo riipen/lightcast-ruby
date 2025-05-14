@@ -6,9 +6,6 @@
 ## Environment normalization:
 /.bundle/
 
-# Built gems
-*.gem
-
 # RSpec related files
 .rspec_status
 
